@@ -4,13 +4,50 @@ const charOrder = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', '
 
 console.log("javascript");
 
-Sort("Cat", "Butt");
-Sort("battleship", "BunkBed");
-Sort("dog", "dog");
-Sort("dog", "dogs");
 
-// alphanumeric sort function returns -1 if string A is before string B,
-// and 1 if string A is after string B. If the two strings are identical, returns -1
+
+
+
+let unsortedWords = ['car', '02cherries', 'zapple', 'horse', 'horses', 'chicken',
+'222', 'itaewon', 'crispyChicken', 'radical', 'bacon', 'kevin'];
+
+SortSingle(2, unsortedWords);
+
+for (var j = 0; j < unsortedWords.length; j++) {
+  SortSingle(j, unsortedWords);
+}
+
+console.log(unsortedWords);
+
+function SortSingle(index, array)
+{
+  // memorize the string
+  var comparison = array[index];
+  var comparerIndex = index;
+  for (i = index; i < array.length; i++)
+  {
+    if (Sort(comparison, array[i]) > 0)
+    {
+      Swap(array, comparerIndex, i);
+      comparerIndex = i;
+    }
+  }
+}
+
+function Swap(array, index1, index2) {
+  if (index1 >= array.length || index2 >= array.length) {
+    console.log('Swap attempted outside the bounds of the array');
+    return;
+  }
+
+  var obj1 = array[index1];
+  var obj2 = array[index2];
+  array[index1] = obj2;
+  array[index2] = obj1;
+}
+
+// alphanumeric sort function returns -1 if string A should be before string B,
+// and 1 if string A should be after string B. If the two strings are identical, returns -1
 function Sort (stringA, stringB) {
 
   // convert our strings to lowercase
