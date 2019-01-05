@@ -2,37 +2,67 @@ const charOrder = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', '
 'd', 'e',  'f', 'g', 'h', 'i', 'j', 'k','l','m',  'n', 'o', 'p', 'q','r', 's', 't',
 'u', 'v', 'w', 'x', 'y', 'z'];
 
-console.log("javascript");
-
-
-
-
+var heavyLogging = false;
 
 let unsortedWords = ['car', '02cherries', 'zapple', 'horse', 'horses', 'chicken',
-'222', 'itaewon', 'crispyChicken', 'radical', 'bacon', 'kevin'];
+'222', 'itaewon', 'crispyChicken', 'radical', 'bacon', 'kevin', 'happy'];
 
-SortSingle(2, unsortedWords);
+let unsortedNums = ['34342', '2445', '2421', '5436', '2', '014', '024821'];
 
-for (var j = 0; j < unsortedWords.length; j++) {
-  SortSingle(j, unsortedWords);
+SortArrayAlphanumeric(unsortedWords);
+
+SortArrayAlphanumeric(unsortedNums);
+
+function SortArrayAlphanumeric(array) {
+
+  console.log(array);
+
+  for (let i = 1; i < array.length; i++) {
+    SortSingleElement(i, array);
+  }
+
+  console.log(array);
 }
 
-console.log(unsortedWords);
-
-function SortSingle(index, array)
+function SortSingleElement(index, array)
 {
-  // memorize the string
-  var comparison = array[index];
-  var comparerIndex = index;
-  for (i = index; i < array.length; i++)
-  {
-    if (Sort(comparison, array[i]) > 0)
+  if (heavyLogging) {
+    console.log('Sorting element at index', index);
+  }
+
+  // catch for if we're trying to sort the very first item in the array
+  if (index <= 0) return;
+
+  var itemAtIndex;
+  var itemAtPrevIndex;
+  var indexToCompareTo = index - 1;
+
+  while (indexToCompareTo >= 0) {
+
+    // compare the item to the previous index
+    itemAtIndex = array[index];
+    itemAtPrevIndex = array[indexToCompareTo];
+
+    // if the item at selected index should be before the other item alphabetically...
+    if (Compare(itemAtIndex, itemAtPrevIndex) < 0)
     {
-      Swap(array, comparerIndex, i);
-      comparerIndex = i;
+      Swap(array, index, indexToCompareTo);
+    }
+    else {
+      // if it doesn't belong before the previous index, we return here.
+      return;
+    }
+
+    index--;
+    indexToCompareTo--;
+
+    if (heavyLogging) {
+      console.log(array);
     }
   }
 }
+
+
 
 function Swap(array, index1, index2) {
   if (index1 >= array.length || index2 >= array.length) {
@@ -48,13 +78,15 @@ function Swap(array, index1, index2) {
 
 // alphanumeric sort function returns -1 if string A should be before string B,
 // and 1 if string A should be after string B. If the two strings are identical, returns -1
-function Sort (stringA, stringB) {
+function Compare (stringA, stringB) {
 
   // convert our strings to lowercase
   a = stringA.toLowerCase();
   b = stringB.toLowerCase();
 
-  console.log("Checking if ", stringA, "or", stringB, "comes first.");
+  if (heavyLogging) {
+    console.log("Checking if ", stringA, "or", stringB, "comes first.");
+  }
 
   var minLength = stringA.length;
   if (stringB.length < stringA.length) {
@@ -66,11 +98,15 @@ function Sort (stringA, stringB) {
     var charB = b[i];
 
     if (ValueOfCharacter(charA) < ValueOfCharacter(charB)) {
-      console.log(stringA + " is before " + stringB);
+      if (heavyLogging) {
+        console.log(stringA + " is before " + stringB);
+      }
       return -1;
     }
     if (ValueOfCharacter(charA) > ValueOfCharacter(charB)) {
-      console.log(stringA + " is after " + stringB);
+      if (heavyLogging) {
+        console.log(stringA + " is after " + stringB);
+      }
       return 1;
     }
 
@@ -79,15 +115,21 @@ function Sort (stringA, stringB) {
   }
 
   if (stringA.length < stringB.length) {
-    console.log(stringA + " is slightly before " + stringB);
+    if (heavyLogging) {
+      console.log(stringA + " is slightly before " + stringB);
+    }
     return -1;
   }
   if (stringA.length > stringB.length) {
-    console.log(stringA + " is slightly after " + stringB);
+    if (heavyLogging){
+      console.log(stringA + " is slightly after " + stringB);
+    }
     return 1;
   }
 
-  console.log(stringA + " sorts identical to " + stringB);
+  if (heavyLogging) {
+    console.log(stringA + " sorts identical to " + stringB);
+  }
   return -1;
 
 }

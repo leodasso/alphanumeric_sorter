@@ -1,0 +1,56 @@
+// first pass swap-sort
+2 5 3 1 2 0
+2 [3 5] 1 2 0
+2 3 [1 5] 2 0
+2 3 1 [2 5] 0
+2 3 1 2 [0 5]
+
+// second pass swap-sort
+2 3 1 2 0 5
+2 [1 3] 2 0 5
+2 1 [2 3] 0 5
+2 1 2 [0 3] 5
+
+// third pass swap-sort
+2 1 2 0 3 5
+[1 2] 2 0 3 5
+1 2 2 0 3 5
+1 2 [0 2] 3 5
+1 2 0 2 3 5
+
+// fourth pass swap-sort
+1 2 0 2 3 5
+1 [0 2] 3 5
+
+etc. This is wildly inefficient because it does so many useless comparisons per pass
+
+// compare sort
+// compare each index to all previous indexes
+2 5 3 1 2 0
+// 2 is already lower than all previous indexes, so no action is taken
+[2] 5 3 1 2 0
+2 [5] 3 1 2 0
+
+// however, 3 is less than 5
+2 5 [3] 1 2 0
+// but stops here, because it's greater than 5
+2 [3] 5 1 2 0
+
+// index 4
+2 3 5 [1] 2 0
+2 3 [1] 5 2 0
+2 [1] 3 5 2 0
+[1] 2 3 5 2 0
+
+// index 5
+1 2 3 5 [2] 0
+1 2 3 [2] 5 0
+1 2 [2] 3 5 0
+
+// index 6
+1 2 2 3 5 [0]
+1 2 2 3 [0] 5
+1 2 2 [0] 3 5
+1 2 [0] 2 3 5
+1 [0] 2 2 3 5
+[0] 1 2 2 3 5
